@@ -36,7 +36,7 @@ public class QueryMain {
 	public ClientIfcModel getModel(String projectName) throws UserException, ServerException, BimServerClientException, PublicInterfaceNotFoundException
 	{
 		SProject p = getProject(projectName);
-		return client.getModel(p, p.getRevisions().get(p.getRevisions().size() - 1), true);
+		return client.getModel(p, p.getRevisions().get(p.getRevisions().size() - 1), false, true);
 	}
 
 	public QueryMain()
