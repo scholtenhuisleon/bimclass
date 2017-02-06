@@ -44,9 +44,9 @@ public class ExportQuantities
 		//implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
-		queryAll();
+		//queryAll();
 		//queryAllByStorey();
-		//exportWallAreaPerPhase();
+		exportWallAreaPerPhase();
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
 		System.out.println("Overall duration "+ time.toString() + " seconds!");
@@ -90,7 +90,7 @@ public class ExportQuantities
 
 	}
 
-	public static void queryAllByStorey() throws ServerException, UserException, BimServerClientException, PublicInterfaceNotFoundException 
+	public static void queryAllByStorey() throws ServerException, UserException, BimServerClientException, PublicInterfaceNotFoundException, WriteException 
 	{
 		//implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
@@ -154,7 +154,7 @@ public class ExportQuantities
 
 					String phase = qo.getQuantity("Phase Created");
 					String lengthStr = qo.getQuantity("Length");
-					
+										
 					// no property set, ignore wall
 					if (phase != null && lengthStr != null)
 					{
