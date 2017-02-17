@@ -1,6 +1,5 @@
 package bimserverclientdemo;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +11,7 @@ import org.bimserver.models.ifc2x3tc1.IfcBuildingStorey;
 import org.bimserver.models.ifc2x3tc1.IfcColumn;
 import org.bimserver.models.ifc2x3tc1.IfcDoor;
 import org.bimserver.models.ifc2x3tc1.IfcObject;
+import org.bimserver.models.ifc2x3tc1.IfcProduct;
 import org.bimserver.models.ifc2x3tc1.IfcRelContainedInSpatialStructure;
 import org.bimserver.models.ifc2x3tc1.IfcRoof;
 import org.bimserver.models.ifc2x3tc1.IfcSlab;
@@ -30,34 +30,32 @@ import jxl.write.Number;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
-
-public class ExportQuantities 
-{
-	// this uses the example project name, please exchange it with the name of your group's project
+public class ExportQuantities {
+	// this uses the example project name, please exchange it with the name of
+	// your project
 	private static final String projectName = "Test3";
 	private static ExcelSheet sheet;
 
-	public static void main(String[] args) throws ServerException, UserException, RowsExceededException, BiffException, WriteException, IOException, BimServerClientException, PublicInterfaceNotFoundException
-	{
+	public static void main(String[] args) throws ServerException, UserException, RowsExceededException, BiffException,
+			WriteException, IOException, BimServerClientException, PublicInterfaceNotFoundException {
 		sheet = new ExcelSheet("demo/phases.xls", "demo/phases_new.xls", "Quantities");
 
-		//implement a timer
+		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
-		//queryAll();
-		//queryAllByStorey();
-		exportWallAreaPerPhase();
+		queryAll();
+		// queryAllByStorey();
+		// exportWallAreaPerPhase();
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
-		System.out.println("Overall duration "+ time.toString() + " seconds!");
+		System.out.println("Overall duration " + time.toString() + " seconds!");
 
 		sheet.writeAndClose();
 	}
 
-
-	public static void queryAll() throws ServerException, UserException, BimServerClientException, PublicInterfaceNotFoundException 
-	{
-		//implement a timer
+	public static void queryAll()
+			throws ServerException, UserException, BimServerClientException, PublicInterfaceNotFoundException {
+		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
 		QueryMain m = new QueryMain();
@@ -77,22 +75,22 @@ public class ExportQuantities
 
 		Iterator<IfcObject> objectIt = objects.iterator();
 
-		while (objectIt.hasNext())
-		{
+		while (objectIt.hasNext()) {
 			IfcObject object = objectIt.next();
 
 			PropertyObject qo = new PropertyObject(object);
 			qo.printProperties();
+
 		}
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
-		System.out.println("query took "+ time.toString() + " seconds!");
+		System.out.println("query took " + time.toString() + " seconds!");
 
 	}
 
-	public static void queryAllByStorey() throws ServerException, UserException, BimServerClientException, PublicInterfaceNotFoundException, WriteException 
-	{
-		//implement a timer
+	public static void queryAllByStorey() throws ServerException, UserException, BimServerClientException,
+			PublicInterfaceNotFoundException, WriteException {
+		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
 		QueryMain m = new QueryMain();
@@ -100,30 +98,36 @@ public class ExportQuantities
 
 		List<IfcBuildingStorey> objects = model.getAllWithSubTypes(IfcBuildingStorey.class);
 
-		for (IfcBuildingStorey storey : objects)
-		{
+		for (IfcBuildingStorey storey : objects) {
 			System.out.println();
 			System.out.println();
 			System.out.println(storey.getName());
 
 			List<IfcRelContainedInSpatialStructure> contained = storey.getContainsElements();
-			for (IfcRelContainedInSpatialStructure c : contained)
-			{
-				for (IfcObject el : c.getRelatedElements())
-				{
+			for (IfcRelContainedInSpatialStructure c : contained) {
+				for (IfcProduct el : c.getRelatedElements()) {
+					System.out.println("I am now in the for loop");
 					PropertyObject qo = new PropertyObject(el);
 					qo.printProperties();
 				}
+//line 106 (and therefore 107 and 108) is problematic. Does IfcRelContainedInSpatialStructure still work? 
+// All other lines seem to work (works in the QueryAll method)
+// substituted the lines that are commented out for the ones above (IfcProduct substituted IfcObject & imported IfcProduct from bimserver) - no effect yet
+//			for (IfcRelContainedInSpatialStructure c : contained) {
+//				for (IfcObject el : c.getRelatedElements()) {
+//					PropertyObject qo = new PropertyObject(el);
+//					qo.printProperties();
+//				}
 			}
 		}
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
-		System.out.println("query took "+ time.toString() + " seconds!");
+		System.out.println("query took " + time.toString() + " seconds!");
 	}
 
-	public static void exportWallAreaPerPhase() throws ServerException, UserException, BiffException, IOException, RowsExceededException, WriteException, BimServerClientException, PublicInterfaceNotFoundException
-	{
-		//implement a timer
+	public static void exportWallAreaPerPhase() throws ServerException, UserException, BiffException, IOException,
+			RowsExceededException, WriteException, BimServerClientException, PublicInterfaceNotFoundException {
+		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
 		QueryMain m = new QueryMain();
@@ -141,49 +145,41 @@ public class ExportQuantities
 		// create the map to hold the length per phase
 		HashMap<String, Double> lengthPerPhase = new HashMap<String, Double>();
 
-		// get the first storey element 
+		// get the first storey element
 		List<IfcRelContainedInSpatialStructure> contained = storey.getContainsElements();
-		for (IfcRelContainedInSpatialStructure c : contained)
-		{
-			for (IfcObject el : c.getRelatedElements())
-			{
+		for (IfcRelContainedInSpatialStructure c : contained) {
+			for (IfcObject el : c.getRelatedElements()) {
 				// select only walls
-				if (el instanceof IfcWallStandardCase || el instanceof IfcWall)
-				{
+				if (el instanceof IfcWallStandardCase || el instanceof IfcWall) {
 					PropertyObject qo = new PropertyObject(el);
 
 					String phase = qo.getQuantity("Phase Created");
 					String lengthStr = qo.getQuantity("Length");
-										
+
 					// no property set, ignore wall
-					if (phase != null && lengthStr != null)
-					{
+					if (phase != null && lengthStr != null) {
 						Double length = Double.parseDouble(lengthStr);
 						// already a wall with this phase: add length to value
-						if (lengthPerPhase.containsKey(phase))
-						{
+						if (lengthPerPhase.containsKey(phase)) {
 							Double aggregatedLength = lengthPerPhase.get(phase);
 							aggregatedLength = aggregatedLength + length;
 							lengthPerPhase.put(phase, aggregatedLength);
 						}
 						// create new HashMap entry
-						else
-						{
+						else {
 							lengthPerPhase.put(phase, length);
 						}
-					}		
+					}
 				}
 			}
 		}
 
-
 		// write HashMap to Excel
 		Iterator<String> keyIt = lengthPerPhase.keySet().iterator();
 
-		//start at row 2 to spare heading
+		// start at row 2 to spare heading
 		int row = 2;
-		while (keyIt.hasNext())
-		{
+		while (keyIt.hasNext()) {
 			String phase = keyIt.next();
 			Label labelCell = new Label(1, row, phase);
 			sheet.getSheet().addCell(labelCell);
@@ -194,9 +190,7 @@ public class ExportQuantities
 		}
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
-		System.out.println("query took "+ time.toString() + " seconds!");
+		System.out.println("query took " + time.toString() + " seconds!");
 	}
-
-
 
 }
