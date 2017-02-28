@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import org.bimserver.client.ClientIfcModel;
 import org.bimserver.models.ifc2x3tc1.IfcBuildingStorey;
 import org.bimserver.models.ifc2x3tc1.IfcColumn;
@@ -43,9 +42,9 @@ public class ExportQuantities {
 		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
-		queryAll();
+		//queryAll();
 		// queryAllByStorey();
-		// exportWallAreaPerPhase();
+		 exportWallAreaPerPhase();
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
 		System.out.println("Overall duration " + time.toString() + " seconds!");
@@ -106,18 +105,10 @@ public class ExportQuantities {
 			List<IfcRelContainedInSpatialStructure> contained = storey.getContainsElements();
 			for (IfcRelContainedInSpatialStructure c : contained) {
 				for (IfcProduct el : c.getRelatedElements()) {
-					System.out.println("I am now in the for loop");
+					System.out.println("Running the IfcRelContainedInspatialStructure loop");
 					PropertyObject qo = new PropertyObject(el);
 					qo.printProperties();
 				}
-//line 106 (and therefore 107 and 108) is problematic. Does IfcRelContainedInSpatialStructure still work? 
-// All other lines seem to work (works in the QueryAll method)
-// substituted the lines that are commented out for the ones above (IfcProduct substituted IfcObject & imported IfcProduct from bimserver) - no effect yet
-//			for (IfcRelContainedInSpatialStructure c : contained) {
-//				for (IfcObject el : c.getRelatedElements()) {
-//					PropertyObject qo = new PropertyObject(el);
-//					qo.printProperties();
-//				}
 			}
 		}
 
@@ -148,13 +139,14 @@ public class ExportQuantities {
 		// get the first storey element
 		List<IfcRelContainedInSpatialStructure> contained = storey.getContainsElements();
 		for (IfcRelContainedInSpatialStructure c : contained) {
-			for (IfcObject el : c.getRelatedElements()) {
+			for (IfcProduct el : c.getRelatedElements()) {
 				// select only walls
 				if (el instanceof IfcWallStandardCase || el instanceof IfcWall) {
 					PropertyObject qo = new PropertyObject(el);
-
+					qo.printProperties(); // prints wall properties to console
 					String phase = qo.getQuantity("Phase Created");
 					String lengthStr = qo.getQuantity("Length");
+					System.out.println(lengthStr);
 
 					// no property set, ignore wall
 					if (phase != null && lengthStr != null) {

@@ -1,4 +1,4 @@
-package bimserverclientdemo;
+/*package bimserverclientdemo;
 
 import org.bimserver.client.BimServerClient;
 import org.bimserver.client.json.JsonBimServerClientFactory;
@@ -28,3 +28,4 @@ public class Demo {
 
 //
 
+*/

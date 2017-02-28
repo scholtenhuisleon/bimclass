@@ -14,7 +14,10 @@ import org.bimserver.interfaces.objects.SProject;
 import org.bimserver.shared.exceptions.ServerException;
 import org.bimserver.shared.exceptions.UserException;
 
- 
+// server side runs 1.5.64 
+// client side (seePOM xml) runs 1.5.67
+
+
 public class QueryMain {
 	private static String name = "l.l.oldescholtenhuis@utwente.nl";
 	private static String password = "password";
@@ -36,7 +39,7 @@ public class QueryMain {
 	public ClientIfcModel getModel(String projectName) throws UserException, ServerException, BimServerClientException, PublicInterfaceNotFoundException
 	{
 		SProject p = getProject(projectName);
-		return client.getModel(p, p.getRevisions().get(p.getRevisions().size() - 1), false, true);
+		return client.getModel(p, p.getRevisions().get(p.getRevisions().size() - 1), true, true);
 	}
 
 	public QueryMain()

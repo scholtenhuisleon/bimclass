@@ -7,7 +7,7 @@
         <dependency>
             <groupId>org.opensourcebim</groupId>
             <artifactId>bimserverclientlib</artifactId>
-            <version>1.5.64</version>
+            <version>1.5.67</version>
         </dependency>
         <dependency>
         	<groupId>net.sourceforge.jexcelapi</groupId>
