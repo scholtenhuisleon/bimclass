@@ -41,9 +41,9 @@ public class ExportQuantities {
 		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
-		// queryAll();
+		 queryAll();
 		// queryAllByStorey();
-		exportWallAreaPerPhase();
+		//exportWallAreaPerPhase();
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
 		System.out.println("Overall duration " + time.toString() + " seconds!");
