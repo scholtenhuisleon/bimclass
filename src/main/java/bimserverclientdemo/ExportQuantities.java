@@ -22,7 +22,6 @@ import org.bimserver.shared.exceptions.BimServerClientException;
 import org.bimserver.shared.exceptions.PublicInterfaceNotFoundException;
 import org.bimserver.shared.exceptions.ServerException;
 import org.bimserver.shared.exceptions.UserException;
-
 import jxl.read.biff.BiffException;
 import jxl.write.Label;
 import jxl.write.Number;
@@ -42,9 +41,9 @@ public class ExportQuantities {
 		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
-		//queryAll();
+		// queryAll();
 		// queryAllByStorey();
-		 exportWallAreaPerPhase();
+		exportWallAreaPerPhase();
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
 		System.out.println("Overall duration " + time.toString() + " seconds!");
@@ -105,7 +104,7 @@ public class ExportQuantities {
 			List<IfcRelContainedInSpatialStructure> contained = storey.getContainsElements();
 			for (IfcRelContainedInSpatialStructure c : contained) {
 				for (IfcProduct el : c.getRelatedElements()) {
-					System.out.println("Running the IfcRelContainedInspatialStructure loop");
+					System.out.println("Running the IfcRelContainedInspatialStructure loop Object");
 					PropertyObject qo = new PropertyObject(el);
 					qo.printProperties();
 				}
@@ -139,7 +138,7 @@ public class ExportQuantities {
 		// get the first storey element
 		List<IfcRelContainedInSpatialStructure> contained = storey.getContainsElements();
 		for (IfcRelContainedInSpatialStructure c : contained) {
-			for (IfcProduct el : c.getRelatedElements()) {
+			for (IfcObject el : c.getRelatedElements()) {
 				// select only walls
 				if (el instanceof IfcWallStandardCase || el instanceof IfcWall) {
 					PropertyObject qo = new PropertyObject(el);
