@@ -41,9 +41,9 @@ public class ExportQuantities {
 		// implement a timer
 		Long startTime = new Long(System.currentTimeMillis());
 
-		// queryAll();
+		queryAll();
 		// queryAllByStorey();
-		exportWallAreaPerPhase();
+		// exportWallAreaPerPhase();
 
 		Long time = (System.currentTimeMillis() - startTime) / 1000;
 		System.out.println("Overall duration " + time.toString() + " seconds!");
@@ -138,7 +138,7 @@ public class ExportQuantities {
 		List<IfcRelContainedInSpatialStructure> contained = storey.getContainsElements();
 		for (IfcRelContainedInSpatialStructure c : contained) {
 			for (IfcObject el : c.getRelatedElements()) {
-				// select only walls
+				// select only walls	
 				if (el instanceof IfcWallStandardCase || el instanceof IfcWall) {
 					PropertyObject qo = new PropertyObject(el);
 					qo.printProperties(); // prints wall properties to console
