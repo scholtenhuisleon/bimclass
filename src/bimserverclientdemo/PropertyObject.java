@@ -84,10 +84,12 @@ public class PropertyObject
 					{
 						extractProperty(prop);
 					}
+				} else {
+					System.out.println("Unimplemented " + psetdef);
+
 				}
 				
 			}
-		
 		}
 		
 	}
