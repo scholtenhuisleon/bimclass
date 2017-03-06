@@ -31,7 +31,7 @@ import jxl.write.biff.RowsExceededException;
 public class ExportQuantities {
 	// this uses the example project name, please exchange it with the name of
 	// your project
-	private static final String projectName = "Test3";
+	private static final String projectName = "Test4";
 	private static ExcelSheet sheet;
 
 	public static void main(String[] args) throws ServerException, UserException, RowsExceededException, BiffException,

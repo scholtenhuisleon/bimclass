@@ -14,7 +14,7 @@ import org.bimserver.interfaces.objects.SProject;
 import org.bimserver.shared.exceptions.ServerException;
 import org.bimserver.shared.exceptions.UserException;
 
-// server side runs 1.5.64 
+// server side runs 1.5.68 
 // client side (seePOM xml) runs 1.5.68
 
 
