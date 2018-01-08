@@ -63,13 +63,7 @@ public class ExportQuantities {
 
 		objects.addAll(model.getAllWithSubTypes(IfcWallStandardCase.class));
 		objects.addAll(model.getAllWithSubTypes(IfcColumn.class));
-		objects.addAll(model.getAllWithSubTypes(IfcRoof.class));
-		objects.addAll(model.getAllWithSubTypes(IfcStair.class));
-		objects.addAll(model.getAllWithSubTypes(IfcWindow.class));
-		objects.addAll(model.getAllWithSubTypes(IfcSlab.class));
-		objects.addAll(model.getAllWithSubTypes(IfcColumn.class));
-		objects.addAll(model.getAllWithSubTypes(IfcWall.class));
-		objects.addAll(model.getAllWithSubTypes(IfcDoor.class));
+
 
 		Iterator<IfcObject> objectIt = objects.iterator();
 
